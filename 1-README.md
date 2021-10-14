@@ -37,3 +37,27 @@ names[3] = "Linus";
 
 Next up...
 [Instruction page](../master/Instructions.md)
+
+
+
+
+
+TODO:
+
+Classes
+- Board
+- Ship
+- Main
+
+Methods
+- Board Contructors
+- Ship Constructors
+- Place Ship
+- Ship Hit
+- Ship Sink
+- Missles
+- Miss/Hit
+- Win/Loss
+- Markers (red peg/white peg)
+
+
