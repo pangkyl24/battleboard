@@ -18,8 +18,8 @@ public class Ship{
 	}
 	
 	public bool acceptPosition(int startX,  int startY, endX, endY) {
-		if (startX == endX || startY == endY){
-			if (startX >= 10 || startY >= 10 || endX >= 10 ||endY >= 10){
+		if (startX == endX || startY == endY){ //Vertical/Horizontal -> True
+			if (startX >= 10 || startY >= 10 || endX >= 10 ||endY >= 10){ //In bounds
 				return false;
 			}
 			return true;
