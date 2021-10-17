@@ -6,7 +6,7 @@ public class Board{
 	String colNames[] = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 	String rowNames [] = {"0","1","2","3","4","5","6","7","8","9"};
 	public Board(){
-		ROW = 11;
+		ROW = 11; // one more than board_size to accomodate indices
 		COL = 11;
 		board = new String[ROW][COL];
 		temp_board = new String[ROW][COL];
