@@ -3,9 +3,11 @@ public class Board{
 	final int COL;
 	String board[][];
 	String temp_board[][];
+	String colNames[] = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+	String rowNames [] = {"0","1","2","3","4","5","6","7","8","9"};
 	public Board(){
-		ROW = 10;
-		COL = 10;
+		ROW = 11;
+		COL = 11;
 		board = new String[ROW][COL];
 		temp_board = new String[ROW][COL];
 		for (int i = 0 ; i < ROW; i++){
@@ -16,9 +18,22 @@ public class Board{
 	}
 
 	public void showBoard(){
+		int colCounter = 0;
 		for (int i = 0 ; i < ROW; i++){
 				for (int j = 0; j < COL; j++) {
-					System.out.print(""+ board[i][j]+ "  ");
+					if (i == 0){
+						System.out.print(""+colNames[j] + "  ");
+					}
+					else {
+						if (j == 0){
+							System.out.print(""+rowNames[colCounter] + "  ");
+							colCounter++;
+						}
+						else{
+							System.out.print(""+ board[i][j]+ "  ");
+						}
+					}
+
 				}
 				System.out.println("");
 		}
