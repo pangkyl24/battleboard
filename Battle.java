@@ -24,7 +24,7 @@ public static void main ( String[] args) {
 	System.out.println("When you play, you can only see your own board. Your board consists of two parts that are separated by dashes (-) and pluses (+). This boundary seperates your ATTACKING board (top) from your STRATEGIC board (bottom). That ATTACKING board is where you will be able to see your hits and misses againt the computer. The STRATEGIC board is where you can see your ships and the computer's hits and misses, marked by H and M respectively. ");
 	System.out.println("Here is a picture of an empty board: \n");
 	playerHits.showBoard();
-	System.out.println("+--+--+--+--+--+--+--+--+--+ ");
+	System.out.println("   +--+--+--+--+--+--+--+--+--+ ");
 	playerShips.showBoard();
 	System.out.println("Press Enter key to continue...");
 	scan.nextLine();
@@ -53,7 +53,7 @@ public static void main ( String[] args) {
 	*/
 
 
-
+	boolean gameOver = true;
 
 
 
@@ -72,7 +72,7 @@ public static void main ( String[] args) {
 		int arr2[] = {0,1};
 		playerShips.registerAttack(arr2);
 		playerHits.showBoard();
-		System.out.println("+--+--+--+--+--+--+--+--+--+ ");
+		System.out.println("   +--+--+--+--+--+--+--+--+--+ ");
 		playerShips.showBoard();
 	}
 
