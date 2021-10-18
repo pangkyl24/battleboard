@@ -68,6 +68,14 @@ public class Ship{
 		
 		
 	}
+	
+	public int[] returnCoords(){
+		
+		return Coordinates;
+		
+	}
+	
+	
 	public void aiCoords(int x, int y, int horiVerti){
 		
 		Coordinates[0] = x;
