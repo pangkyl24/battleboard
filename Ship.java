@@ -2,18 +2,18 @@ public class Ship{
 
 	//[Class Variables]
 	public int shipSize;
-	public int[] Coordinates;
+	public int[] coordinates;
 	public int hits;
 	
 	public Ship(){ //CONSTRUCTOR
 		shipSize = 2;
-		Coordinates = new int[4];
+		coordinates = new int[4];
 		hits = 0;
 	}
 	
 	public Ship(int size){ //OVERLOADED CONTRUCTOR
 		shipSize = size;
-		Coordinates = new int[4];
+		coordinates = new int[4];
 		hits = 0;
 	}
 	
@@ -34,10 +34,10 @@ public class Ship{
 	//[Confirms]
 	public void shipCoords (int startX, int startY, int endX, int endY) {
 		
-		Coordinates[0] = startX;
-		Coordinates[1] = startY;
-		Coordinates[2] = endX;
-		Coordinates[3] = endX;
+		coordinates[0] = startX;
+		coordinates[1] = startY;
+		coordinates[2] = endX;
+		coordinates[3] = endX;
 		/*int[][] coords = new int[shipSize][2];
 		//System.out.println(coords); - SysPrint = Error Checking
 		System.out.println(shipSize);
@@ -70,8 +70,8 @@ public class Ship{
 	}
 	
 	public int[] returnCoords(){
-		
-		return Coordinates;
+		System.out.println(coordinates);
+		return coordinates;
 		
 	}
 	
