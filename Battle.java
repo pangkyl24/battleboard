@@ -18,7 +18,7 @@ public static void main ( String[] args) {
 	// Introduction to game
 	System.out.println("INSTRUCTIONS");
 	System.out.println("Welcome to BattleShip! Your goal is to sink the computer's ships, before the computer sinks yours. You each have 3 ships to place on a 10 x 10 board.");
-	System.out.println("Press Enter key to continue...");
+	System.out.println("Press Enter key to continue..."); // 3 Of these -> Shows messages one at a time as not to flood screen
 	scan.nextLine();
 	System.out.println("USER INTERFACE");
 	System.out.println("When you play, you can only see your own board. Your board consists of two parts that are separated by dashes (-) and pluses (+). This boundary seperates your ATTACKING board (top) from your STRATEGIC board (bottom). That ATTACKING board is where you will be able to see your hits and misses againt the computer. The STRATEGIC board is where you can see your ships and the computer's hits and misses, marked by H and M respectively. ");
@@ -53,7 +53,7 @@ public static void main ( String[] args) {
 	*/
 
 
-	boolean gameOver = true;
+	boolean gameOver = true; //gameOver = End Game Req/Indicator
 
 
 
@@ -64,7 +64,7 @@ public static void main ( String[] args) {
 
 		System.out.println("Enter Y coordinate: ");
 
-
+		//Need to Fill
 
 		System.out.println();
 		System.out.println();
