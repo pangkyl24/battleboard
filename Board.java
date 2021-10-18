@@ -1,17 +1,13 @@
 public class Board{
-	//[Class Variables]
 	final int ROW;
 	final int COL;
 	String board[][];
-	String temp_board[][];
 	String colNames[] = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 	String rowNames [] = {"0","1","2","3","4","5","6","7","8","9"};
-	
-	public Board(){ //Constructor
-		ROW = 11; // one more than board_size to accomodate indices
-		COL = 11;
-		board = new String[ROW][COL];
-		temp_board = new String[ROW][COL];
+	public Board(){
+		ROW = 11; // one higher than lenght because of indexes on side of board
+		COL = 11; // one higher than lenght because of indexes on side of board
+		board = new String[ROW][COL]; // create a board
 		for (int i = 0 ; i < ROW; i++){
 				for (int j = 0; j < COL; j++) {
 					board[i][j] = "0";
@@ -19,91 +15,113 @@ public class Board{
 			}
 	}
 
-	public void showBoard(){ //Displays the Board @ any given moment
+	public void showBoard(){ // shows board
 		int colCounter = 0;
-		for (int i = 0 ; i < ROW; i++){
-				for (int j = 0; j < COL; j++) {
+		for (int i = 0 ; i < ROW; i++){ //iterate through rows
+				for (int j = 0; j < COL; j++) { //iterate through columns
 					if (i == 0){
-						System.out.print(""+colNames[j] + "  ");
+						System.out.print(""+colNames[j] + "  "); // print indexes of board
 					}
 					else {
 						if (j == 0){
-							System.out.print(""+rowNames[colCounter] + "  ");
+							System.out.print(""+rowNames[colCounter] + "  "); // print indexes of board
 							colCounter++;
 						}
 						else{
-							System.out.print(""+ board[i][j]+ "  ");
+							System.out.print(""+ board[i][j]+ "  "); // print value at each location
 						}
 					}
 
 				}
-				System.out.println("");
+				System.out.println(""); // to make a new line for next row
 		}
 	}
 
-	/*public void shipLocation(int[] shipCoordinate){
+	public void shipLocation(int[] shipCoordinate){ // updates ship location on board
+		// get necessary coordinates for ship
 		int startX = shipCoordinate[0];
 		int startY = shipCoordinate[1];
 		int endX = shipCoordinate[2];
 		int endY = shipCoordinate[3];
 
+
+		// will check if can or can not place ship
 		boolean checkerX = false;
 		boolean checkerY = false;
 
-		int temp;
+		int temp; // used for switching variables
 
 		if (startX == endX){
-			if (endY < startY){
+			if (endY < startY){ // for loop only starts if end is bigger than y, but player may not enter coordinates like in that manner
+
+				// if end is smaller than start, switch value of variables
 				temp = endY;
 				endY = startY;
 				startY = temp;
 			}
-			for (int i = startY; i <= endY; i++){
+
+			for (int i = startY; i <= endY; i++){ // this does a 'ghost' pass to check if the ship can be placed; if yes, checker becomes true
 				if (board[startX][i].equals("+")){
 					checkerX = true;
 				}
 			}
-			if (!checkerX){
+			if (!checkerX){ // if ship can be placed, update values on board
 				for (int i = startY; i <= endY; i++){
 					board[startX][i] = "+";
 				}
 			}
 		}
 
-		if (startY == endY){
+		if (startY == endY){ // for loop only starts if end is bigger than y, but player may not enter coordinates like in that manner
+
+			// if end is smaller than start, switch value of variables
 			if (endX < startX){
 				temp = endX;
 				endX = startX;
 				startX = temp;
 			}
-			for (int i = startX; i <= endX; i++){
+
+			for (int i = startX; i <= endX; i++){ // this does a 'ghost' pass to check if the ship can be placed; if yes, checker becomes true
 				if (board[i][startY].equals("+")){
 					checkerY = true;
 				}
 			}
-			if (!checkerY) {
+			if (!checkerY) { // if ship can be placed, update values on board
 				for (int i = startX; i <= endX; i++){
 					board[i][startY] = "+";
 					}
 				}
 			}
 
-	}*/
-
-	public void registerAttack(int[] attackCoordinate){ //Registers an Attack onto the board [With Computer]
-		int attackX = attackCoordinate[0];
-		int attackY = attackCoordinate[1];
-
-		if (board[attackX][attackY].equals("+")){ //If the attack hits a Ship -> "Computer Hits"
-			board[attackX][attackY] = "M";
-			System.out.println("Computer Hits");
-		}
-
-		else{ //Otherwise -> "Computer Misses"
-			board[attackX][attackY] = "X";
-			System.out.println("Computer Misses");
-		}
 	}
+
+	public boolean registerAttack(int attackX, int attackY){ // register attack on a board for ships
+		// create markers for each type of attack
+		String hit = "H";
+		String miss = "M";
+
+
+		if (board[attackX][attackY].equals("+")){ // hit is present if the attack is at the location of the ship, marked by a '+'
+			board[attackX][attackY] = hit;
+			System.out.println("Hit");
+			return true; // return true that hit occureed
+		}
+
+		else{
+			board[attackX][attackY] = miss; // hit does not occur, mark location
+			System.out.println("Miss");
+		}
+		return false; // hit did not occur
+	}
+
+	public void markAttack(int attackX, int attackY, boolean sucess){ // show attack on a board for attack
+		if (sucess) {
+			board[attackX][attackY] = "@"; // change the value if the computer ship was hit
+		}
+		board[attackX][attackY] = "X"; // mark that ship was not hit with an X so no double hit
+
+	}
+
 
 
 }
