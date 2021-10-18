@@ -1,127 +1,142 @@
-public class Board{
-	final int ROW;
-	final int COL;
-	String board[][];
-	String colNames[] = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
-	String rowNames [] = {"0","1","2","3","4","5","6","7","8","9"};
-	public Board(){
-		ROW = 11; // one higher than lenght because of indexes on side of board
-		COL = 11; // one higher than lenght because of indexes on side of board
-		board = new String[ROW][COL]; // create a board
-		for (int i = 0 ; i < ROW; i++){
-				for (int j = 0; j < COL; j++) {
-					board[i][j] = "0";
-				}
-			}
+/*Test file for building and running your program - the main is to support
+*   development in Repl.it
+*
+*/
+import java.util.*;
+
+public class Battle {
+
+
+public static void main ( String[] args) {
+	Board playerShips = new Board(); // load in player board with ships
+	Board playerHits = new Board(); // load player attack board
+	Board computerShips = new Board(); // load computer board with ships
+	Scanner scan = new Scanner(System.in);  // scaner
+
+	String colNamesString = " ABCDEFGHIJ  "; // Name of columns on board to use when player enters in attack coordinates
+	String rowNamesString = "0123456789 "; // Name of row on board to use when player enters in attack coordinates
+
+
+
+	// Introduction to game
+	System.out.println("");
+	System.out.println("                                 # #  ( )");
+  System.out.println("                              ___#_#___|__");
+  System.out.println("                             _  |____________|  _");
+  System.out.println("                      _=====| | |            | | |==== _");
+  System.out.println("                =====| |.---------------------------. | |====");
+  System.out.println("  <--------------------'   .  .  .  .  .  .  .  .   '--------------|");
+  System.out.println("     |                                                            |");
+  System.out.println("     |_______________________________________________WWS_________|");
+
+	System.out.println("");
+	System.out.println("");
+	System.out.println("");
+	System.out.println("");
+	// Menu
+	System.out.println("WELCOME TO BATTLESHIP!");
+	System.out.println("Press Enter key to start game...");
+	scan.nextLine();
+	//Instructions
+	System.out.println("INSTRUCTIONS");
+	System.out.println("Welcome to BattleShip! Your goal is to sink the computer's ships, before the computer sinks yours. You each have 3 ships to place on a 10 x 10 board.");
+	System.out.println("Press Enter key to continue...");
+	scan.nextLine();
+	System.out.println("USER INTERFACE");
+	System.out.println("When you play, you can only see your own board. Your board consists of two parts that are separated by dashes (-) and pluses (+). This boundary seperates your ATTACKING board (top) from your STRATEGIC board (bottom). That ATTACKING board is where you will be able to see your hits and misses againt the computer. The STRATEGIC board is where you can see your ships and the computer's hits and misses, marked by H and M respectively. ");
+	System.out.println("Here is a picture of an empty board: \n");
+	playerHits.showBoard();
+	System.out.println("   +--+--+--+--+--+--+--+--+--+ ");
+	playerShips.showBoard();
+	System.out.println("Press Enter key to continue...");
+	scan.nextLine();
+	System.out.println();
+	System.out.println("HOW TO PLACE SHIPS");
+	System.out.println("When prompted, enter the letter and integer coordinates for both ends of your ships on the STRATEGIC board. You can not place ships diagnonally nor can you overlap any ships. Also, make sure that each ship is plaed within the board. ");
+	System.out.println("Press Enter key to continue...");
+	scan.nextLine();
+	System.out.println("ATTACKING");
+	System.out.println("When prompted, enter the letter and integer coordinates of the location on your ATTACKING board. Hits will be marked with an @ and misses with an X.");
+	System.out.println("Press Enter to start playing");
+	scan.nextLine();
+
+	//Place all ships
+	// Need to do this part still. Ship class is almost complete and will add into main once done
+
+
+
+	// temporary ship while we combine the ship class into the main game for testing purposes
+	boolean gameOver = false;
+	int arr[] = {1,1,1,5};
+	playerShips.shipLocation(arr);
+	playerHits.showBoard();
+	System.out.println("+--+--+--+--+--+--+--+--+--+ ");
+	playerShips.showBoard();
+
+
+
+	String attackLetter; //Player will enter string for attack column
+	int attackNumberCol; //Convert string for attack to integer for indexing
+	String attackNumberAsString; //Player will enter string for attack row
+	int attackNumberRow; //Convert string for attack to integer for indexing
+	boolean playerSucess; // checks if player was sucessful in hitting ship
+	boolean computerSucess; // checks if computer was sucessful in hitting ship
+	String buffer; //buffer
+
+	int computerAttackX; // computer X attack coordinate
+	int computerAttackY; // computer Y attack coordinate
+
+
+
+	//Begin game
+	while (!gameOver){ // Keep going until game ends
+		//Get attack coordinates from player
+		System.out.println("Guess where to attack. You will need to enter a letter and an integer coordinate as integers. ");
+		System.out.print("Enter an uppercase letter: ");
+		attackLetter = (scan.nextLine()).toUpperCase(); // convert input to uppercase
+		attackNumberCol = (colNamesString).indexOf(attackLetter); // Get index of letter so to enter into attack method of Board.java
+		System.out.print("Enter a row coordinate as an integer: ");
+		attackNumberAsString = scan.nextLine(); // convert input to uppercase
+		attackNumberRow = (rowNamesString).indexOf(attackNumberAsString); // Get index of number (which is a string right now) so to enter into attack method of Board.java
+
+		//Attack computer ships
+		System.out.println();
+		System.out.print("Firing missles at enemy: ");
+		playerSucess = computerShips.registerAttack(attackNumberRow+1, attackNumberCol); // register the players attack on computer; return true if hit
+		playerHits.markAttack(attackNumberRow+1, attackNumberCol, playerSucess); // if player hit, update player attack board as needed
+		// Show board
+		playerHits.showBoard();
+		System.out.println("   +--+--+--+--+--+--+--+--+--+ ");
+		playerShips.showBoard();
+		System.out.println();
+		System.out.println("You fired at " + rowNamesString.substring(attackNumberRow, attackNumberRow+1) + colNamesString.substring(attackNumberCol, attackNumberCol+1));
+
+
+		//Generate attack coordinates from computer and attack player
+		computerAttackX = (int) (Math.random() * 9 + 1); //random number from 1 to 10
+		computerAttackY = (int) (Math.random() * 9 + 1); //random number from 1 to 10
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.print("Enemy firing missles: ");
+		computerSucess = playerShips.registerAttack(computerAttackX, computerAttackY); // register attack on player board; mark if computer hits ship
+		// Show board
+		playerHits.showBoard();
+		System.out.println("   +--+--+--+--+--+--+--+--+--+ ");
+		playerShips.showBoard();
+		System.out.println();
+		System.out.println("Enemy fired at " + rowNamesString.substring(computerAttackX-1, computerAttackX) + colNamesString.substring(computerAttackY, computerAttackY+1));
+		System.out.println();
+		System.out.println();
+
+
+
 	}
 
-	public void showBoard(){ // shows board
-		int colCounter = 0;
-		for (int i = 0 ; i < ROW; i++){ //iterate through rows
-				for (int j = 0; j < COL; j++) { //iterate through columns
-					if (i == 0){
-						System.out.print(""+colNames[j] + "  "); // print indexes of board
-					}
-					else {
-						if (j == 0){
-							System.out.print(""+rowNames[colCounter] + "  "); // print indexes of board
-							colCounter++;
-						}
-						else{
-							System.out.print(""+ board[i][j]+ "  "); // print value at each location
-						}
-					}
-
-				}
-				System.out.println(""); // to make a new line for next row
-		}
-	}
-
-	public void shipLocation(int[] shipCoordinate){ // updates ship location on board
-		// get necessary coordinates for ship
-		int startX = shipCoordinate[0];
-		int startY = shipCoordinate[1];
-		int endX = shipCoordinate[2];
-		int endY = shipCoordinate[3];
-
-
-		// will check if can or can not place ship
-		boolean checkerX = false;
-		boolean checkerY = false;
-
-		int temp; // used for switching variables
-
-		if (startX == endX){
-			if (endY < startY){ // for loop only starts if end is bigger than y, but player may not enter coordinates like in that manner
-
-				// if end is smaller than start, switch value of variables
-				temp = endY;
-				endY = startY;
-				startY = temp;
-			}
-
-			for (int i = startY; i <= endY; i++){ // this does a 'ghost' pass to check if the ship can be placed; if yes, checker becomes true
-				if (board[startX][i].equals("+")){
-					checkerX = true;
-				}
-			}
-			if (!checkerX){ // if ship can be placed, update values on board
-				for (int i = startY; i <= endY; i++){
-					board[startX][i] = "+";
-				}
-			}
-		}
-
-		if (startY == endY){ // for loop only starts if end is bigger than y, but player may not enter coordinates like in that manner
-
-			// if end is smaller than start, switch value of variables
-			if (endX < startX){
-				temp = endX;
-				endX = startX;
-				startX = temp;
-			}
-
-			for (int i = startX; i <= endX; i++){ // this does a 'ghost' pass to check if the ship can be placed; if yes, checker becomes true
-				if (board[i][startY].equals("+")){
-					checkerY = true;
-				}
-			}
-			if (!checkerY) { // if ship can be placed, update values on board
-				for (int i = startX; i <= endX; i++){
-					board[i][startY] = "+";
-					}
-				}
-			}
-
-	}
-
-	public boolean registerAttack(int attackX, int attackY){ // register attack on a board for ships
-		// create markers for each type of attack
-		String hit = "H";
-		String miss = "M";
-
-
-		if (board[attackX][attackY].equals("+")){ // hit is present if the attack is at the location of the ship, marked by a '+'
-			board[attackX][attackY] = hit;
-			System.out.println("Hit");
-			return true; // return true that hit occureed
-		}
-
-		else{
-			board[attackX][attackY] = miss; // hit does not occur, mark location
-			System.out.println("Miss");
-		}
-		return false; // hit did not occur
-	}
-
-	public void markAttack(int attackX, int attackY, boolean sucess){ // show attack on a board for attack
-		if (sucess) {
-			board[attackX][attackY] = "@"; // change the value if the computer ship was hit
-		}
-		board[attackX][attackY] = "X"; // mark that ship was not hit with an X so no double hit
-
-	}
+	//Still need to add in stopping mechanism to game once ship.java is complete
 
 
 
-}
+}  //close main method
+
+}  //close the Main class
