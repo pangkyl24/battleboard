@@ -2,18 +2,18 @@ public class Ship{
 
 	//[Class Variables]
 	public int shipSize;
-	public int[][] Coordinates;
+	public int[] Coordinates;
 	public int hits;
 	
 	public Ship(){ //CONSTRUCTOR
 		shipSize = 2;
-		Coordinates = new int[shipSize][2];
+		Coordinates = new int[4];
 		hits = 0;
 	}
 	
 	public Ship(int size){ //OVERLOADED CONTRUCTOR
 		shipSize = size;
-		Coordinates = new int[shipSize][2];
+		Coordinates = new int[4];
 		hits = 0;
 	}
 	
@@ -32,10 +32,13 @@ public class Ship{
 	}*/
 	
 	//[Confirms]
-	public int[][] shipCoords (int startX, int startY, int endX, int endY) {
+	public void shipCoords (int startX, int startY, int endX, int endY) {
 		
-		
-		int[][] coords = new int[shipSize][2];
+		Coordinates[0] = startX;
+		Coordinates[1] = startY;
+		Coordinates[2] = endX;
+		Coordinates[3] = endX;
+		/*int[][] coords = new int[shipSize][2];
 		//System.out.println(coords); - SysPrint = Error Checking
 		System.out.println(shipSize);
 		System.out.println("Ckpt1");
@@ -61,8 +64,37 @@ public class Ship{
 			}
 		}
 		Coordinates = coords;
-		return coords;
+		return coords;*/
 		
+		
+	}
+	public void aiCoords(int x, int y, int horiVerti){
+		
+		Coordinates[0] = x;
+		Coordinates[1] = y;
+		
+		if (horiVerti == 0){ //Horizontal
+			
+			Coordinates[3] = y;
+			if (x <= 5){		
+				Coordinates[2] = x+shipSize-1;
+			}
+			else {
+				Coordinates[2] = x-shipSize+1;
+			}
+			
+		}
+		else if (horiVerti == 1){ //Vertical
+			
+			Coordinates[2] = x;
+			if (y <= 5){
+				Coordinates[3] = y+shipSize-1;
+			}
+			else {
+				Coordinates[3] = y-shipSize+1;
+			}
+			
+		}
 		
 	}
 	
@@ -70,11 +102,37 @@ public class Ship{
 		hits += 1; //Marking that Ship was Hit
 		for (int i = 0; i < shipSize; i++){
 			
-			if (Coordinates[i][0] == x && Coordinates[i][1] == y){ //Removing the Coord
+			/*if (Coordinates[i][0] == x && Coordinates[i][1] == y){ //Removing the Coord
 				Coordinates[i][0] = -1;
 				Coordinates[i][1] = -1;
-			}
+			}*/
 		}		
 	}
+	
+	public boolean onBoard (int startX, int startY, int endX, int endY){
+		
+		if (startX > 10 || startX < 1){
+			return false;
+		}
+		if (startY > 10 || startY < 1){
+			return false;
+		}
+		if (endX > 10 || endX < 1){
+			return false;
+		}
+		if (endY > 10 || endY < 1){
+			return false;
+		}
+		return true;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }
+
 
