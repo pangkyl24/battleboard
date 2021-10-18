@@ -95,6 +95,7 @@ public class Ship{
 			}
 			
 		}
+		//System.out.println("(" + Coordinates[0] + ", " + Coordinates[1] + ", " + Coordinates[2] + ", " + Coordinates[3] + ")");
 		
 	}
 	
@@ -134,5 +135,3 @@ public class Ship{
 	
 	
 }
-
-
