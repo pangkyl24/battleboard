@@ -4,7 +4,7 @@
 */
 import java.util.*;
 
-public class Main {
+public class Battle {
 
 
 public static void main ( String[] args) {
