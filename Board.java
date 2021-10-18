@@ -10,7 +10,7 @@ public class Board{
 		board = new String[ROW][COL]; // create a board
 		for (int i = 0 ; i < ROW; i++){
 				for (int j = 0; j < COL; j++) {
-					board[i][j] = "0";
+					board[i][j] = "-";
 				}
 			}
 	}
