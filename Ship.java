@@ -33,7 +33,7 @@ public class Ship{
 	
 	//[Confirms]
 	public void shipCoords (int startX, int startY, int endX, int endY) {
-		
+		// Get necessary coordinates and add them to coordinates array
 		coordinates[0] = startX;
 		coordinates[1] = startY;
 		coordinates[2] = endX;
@@ -69,14 +69,14 @@ public class Ship{
 		
 	}
 	
-	public int[] returnCoords(){
+	public int[] returnCoords(){ // just return coordinates for board; need to update to not pass the reference
 		System.out.println(coordinates);
 		return coordinates;
 		
 	}
 	
 	
-	public void aiCoords(int x, int y, int horiVerti){
+	public void aiCoords(int x, int y, int horiVerti){ // will control the coordinates for the computer; split graph into 4 sections
 		
 		Coordinates[0] = x;
 		Coordinates[1] = y;
@@ -118,7 +118,7 @@ public class Ship{
 		}		
 	}
 	
-	public boolean onBoard (int startX, int startY, int endX, int endY){
+	public boolean onBoard (int startX, int startY, int endX, int endY){ // make sure coordinates are on board to ensure game will work
 		
 		if (startX > 10 || startX < 1){
 			return false;
