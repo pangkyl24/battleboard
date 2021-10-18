@@ -1,11 +1,13 @@
 public class Board{
+	//[Class Variables]
 	final int ROW;
 	final int COL;
 	String board[][];
 	String temp_board[][];
 	String colNames[] = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 	String rowNames [] = {"0","1","2","3","4","5","6","7","8","9"};
-	public Board(){
+	
+	public Board(){ //Constructor
 		ROW = 11; // one more than board_size to accomodate indices
 		COL = 11;
 		board = new String[ROW][COL];
@@ -17,7 +19,7 @@ public class Board{
 			}
 	}
 
-	public void showBoard(){
+	public void showBoard(){ //Displays the Board @ any given moment
 		int colCounter = 0;
 		for (int i = 0 ; i < ROW; i++){
 				for (int j = 0; j < COL; j++) {
@@ -39,7 +41,7 @@ public class Board{
 		}
 	}
 
-	public void shipLocation(int[] shipCoordinate){
+	/*public void shipLocation(int[] shipCoordinate){
 		int startX = shipCoordinate[0];
 		int startY = shipCoordinate[1];
 		int endX = shipCoordinate[2];
@@ -86,18 +88,18 @@ public class Board{
 				}
 			}
 
-	}
+	}*/
 
-	public void registerAttack(int[] attackCoordinate){
+	public void registerAttack(int[] attackCoordinate){ //Registers an Attack onto the board [With Computer]
 		int attackX = attackCoordinate[0];
 		int attackY = attackCoordinate[1];
 
-		if (board[attackX][attackY].equals("+")){
+		if (board[attackX][attackY].equals("+")){ //If the attack hits a Ship -> "Computer Hits"
 			board[attackX][attackY] = "M";
 			System.out.println("Computer Hits");
 		}
 
-		else{
+		else{ //Otherwise -> "Computer Misses"
 			board[attackX][attackY] = "X";
 			System.out.println("Computer Misses");
 		}
