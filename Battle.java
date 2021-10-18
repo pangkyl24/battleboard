@@ -11,6 +11,7 @@ public static void main ( String[] args) {
 	Board playerShips = new Board(); // load in player board with ships
 	Board playerHits = new Board(); // load player attack board
 	Board computerShips = new Board(); // load computer board with ships
+	
 	Scanner scan = new Scanner(System.in);  // scaner
 
 	String colNamesString = " ABCDEFGHIJ  "; // Name of columns on board to use when player enters in attack coordinates
@@ -62,16 +63,72 @@ public static void main ( String[] args) {
 
 	//Place all ships
 	// Need to do this part still. Ship class is almost complete and will add into main once done
+	
+	//Make ships
+	System.out.println("You will have 3 ships that you can place, of sizes 2, 3, and 4. Generating ships ... ");
+	Ship S2 = new Ship();
+	Ship S3 = new Ship(3);
+	Ship S4 = new Ship(4);
+	Ship ships[] = {S2, S3, S4};
+	
+	//need to convert from int to string
+	String xStartStringPlayer;
+	String yStartStringPlayer;
+	String xEndStringPlayer;
+	String yEndStringPlayer;
+	
+	int xStartPlayer;
+	int yStartPlayer;
+	int xEndPlayer;
+	int yEndPlayer;
+	
+	//check if ship is fine
+	boolean boardChecker;
+	
+	//get ship coordinates for each ship
+	for (int i = 0; i < 3; i++) {
+		System.out.println("Place your ship with length " + (i + 2) + ". You will need to place the specify the start end end coordinates of the Ship" );
+		System.out.print("Enter a row coordinate as an integer for the start: ");
+		xStartStringPlayer = (scan.nextLine()).toUpperCase();
+		System.out.print("Enter an uppercase letter for the column of the start of the ship: ");
+		yStartStringPlayer = (scan.nextLine()).toUpperCase();
+		
+		yStartPlayer = (colNamesString).indexOf(yStartStringPlayer); 
+		xStartPlayer = (rowNamesString).indexOf(xStartStringPlayer); 
+		
+		System.out.print("Enter a row coordinate as an integer for the end: ");
+		xEndStringPlayer = (scan.nextLine()).toUpperCase();
+		System.out.print("Enter an uppercase letter for the column of the end of the ship: ");
+		yEndStringPlayer = (scan.nextLine()).toUpperCase();
+		
+		yEndPlayer = (colNamesString).indexOf(yEndStringPlayer); 
+		xEndPlayer = (rowNamesString).indexOf(xEndStringPlayer); 
+		boardChecker = ships[i].onBoard(xStartPlayer, yStartPlayer, xEndPlayer, yEndPlayer);
+		if (!boardChecker){
+			System.out.println("Ship is outside the board. Place your ship again");
+			i--;
+		}
+		if(boardChecker){
+			ships[i].shipCoords(xStartPlayer + 1, yStartPlayer, xEndPlayer, yEndPlayer);
+			ships[i].returnCoords();
+			playerShips.shipLocation(ships[i].returnCoords());
+			playerHits.showBoard();
+			System.out.println("+--+--+--+--+--+--+--+--+--+ ");
+			playerShips.showBoard();
+		}
+		
+		
+	}
+
+
+	
 
 
 
 	// temporary ship while we combine the ship class into the main game for testing purposes
 	boolean gameOver = false;
 	int arr[] = {1,1,1,5};
-	playerShips.shipLocation(arr);
-	playerHits.showBoard();
-	System.out.println("+--+--+--+--+--+--+--+--+--+ ");
-	playerShips.showBoard();
+
 
 
 
