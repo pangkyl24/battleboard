@@ -2,10 +2,6 @@
 *   development in Repl.it
 *
 */
-
-
-// ASCII Art reference: https://ascii.co.uk/art/battleship
-
 import java.util.*;
 
 public class Battle {
@@ -15,7 +11,7 @@ public static void main ( String[] args) {
 	Board playerShips = new Board(); // load in player board with ships
 	Board playerHits = new Board(); // load player attack board
 	Board computerShips = new Board(); // load computer board with ships
-
+	
 	Scanner scan = new Scanner(System.in);  // scaner
 
 	String colNamesString = " ABCDEFGHIJ  "; // Name of columns on board to use when player enters in attack coordinates
@@ -23,7 +19,7 @@ public static void main ( String[] args) {
 
 
 
-	// Introduction to game; ASCII Art reference: https://ascii.co.uk/art/battleship
+	// Introduction to game
 	System.out.println("");
 	System.out.println("                                 # #  ( )");
   System.out.println("                              ___#_#___|__");
@@ -67,30 +63,31 @@ public static void main ( String[] args) {
 
 	//Place all ships
 	// Need to do this part still. Ship class is almost complete and will add into main once done
-
+	
 	//Make ships
 	System.out.println("You will have 3 ships that you can place, of sizes 2, 3, and 4. Generating ships ... ");
 	Ship S2 = new Ship();
 	Ship S3 = new Ship(3);
 	Ship S4 = new Ship(4);
 	Ship ships[] = {S2, S3, S4};
-
-	//need to convert from int to string later in program, so make variables that can store each variable type
+	
+	//need to convert from int to string
 	String xStartStringPlayer;
 	String yStartStringPlayer;
 	String xEndStringPlayer;
 	String yEndStringPlayer;
+	
 	int xStartPlayer;
 	int yStartPlayer;
 	int xEndPlayer;
 	int yEndPlayer;
-
+	
 	//check if ship is fine
 	boolean boardChecker;
-
-	// coordinate holder
+	
+	// array for coordinates
 	int[] coord = new int[4];
-
+	
 	//get ship coordinates for each ship
 	for (int i = 0; i < 3; i++) {
 		System.out.println("Place your ship with length " + (i + 2) + ". You will need to place the specify the start end end coordinates of the Ship" );
@@ -98,37 +95,46 @@ public static void main ( String[] args) {
 		xStartStringPlayer = (scan.nextLine()).toUpperCase();
 		System.out.print("Enter an uppercase letter for the column of the start of the ship: ");
 		yStartStringPlayer = (scan.nextLine()).toUpperCase();
-
-		yStartPlayer = (colNamesString).indexOf(yStartStringPlayer); // get index of string to match with index of board
-		xStartPlayer = (rowNamesString).indexOf(xStartStringPlayer); // get index of string to match with index of board
-
+		
+		yStartPlayer = (colNamesString).indexOf(yStartStringPlayer); 
+		xStartPlayer = (rowNamesString).indexOf(xStartStringPlayer); 
+		
 		System.out.print("Enter a row coordinate as an integer for the end: ");
 		xEndStringPlayer = (scan.nextLine()).toUpperCase();
 		System.out.print("Enter an uppercase letter for the column of the end of the ship: ");
 		yEndStringPlayer = (scan.nextLine()).toUpperCase();
-
-		yEndPlayer = (colNamesString).indexOf(yEndStringPlayer); // get index of string to match with index of board
-		xEndPlayer = (rowNamesString).indexOf(xEndStringPlayer); // get index of string to match with index of board
-		boardChecker = ships[i].onBoard(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer); // check to make sure on board
-		if (!boardChecker){ // if checking fails
+		
+		yEndPlayer = (colNamesString).indexOf(yEndStringPlayer); 
+		xEndPlayer = (rowNamesString).indexOf(xEndStringPlayer); 
+		boardChecker = ships[i].onBoard(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer);
+		if (!boardChecker){
 			System.out.println("Ship is outside the board. Place your ship again");
 			i--;
 		}
 		if(boardChecker){
-			// update coordinate to be placed
-			coord[0] = xStartPlayer;
+			coord[0] = xStartPlayer + 1;
 			coord[1] = yStartPlayer;
-			coord[2] = xEndPlayer;
+			coord[2] = xEndPlayer+1;
 			coord[3] = yEndPlayer;
-			ships[i].shipCoords(xStartPlayer + 1, yStartPlayer, xEndPlayer + 1, yEndPlayer); // enter ship coordinate into ship class because will need to refernce later
-			playerShips.shipLocation(coord); // place coordinate
-			playerHits.showBoard(); // show graph again
+			ships[i].shipCoords(xStartPlayer + 1, yStartPlayer, xEndPlayer+1, yEndPlayer);
+			//ships[i].returnCoords();
+			playerShips.shipLocation(coord);
+			playerHits.showBoard();
 			System.out.println("+--+--+--+--+--+--+--+--+--+ ");
 			playerShips.showBoard();
 		}
-
-
+		
+		
 	}
+
+
+	
+
+
+
+	// temporary ship while we combine the ship class into the main game for testing purposes
+	boolean gameOver = false;
+	int arr[] = {1,1,1,5};
 
 
 
