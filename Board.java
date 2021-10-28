@@ -122,6 +122,47 @@ public class Board{
 
 	}
 
+	public boolean doesOverlap(int startX, int startY, int endX, int endY){
+		boolean checker = false;
+		int temp;
+		if (startX == endX){
+			if (endY < startY){ // for loop only starts if end is bigger than y, but player may not enter coordinates like in that manner
+
+				// if end is smaller than start, switch value of variables
+				temp = endY;
+				endY = startY;
+				startY = temp;
+			}
+
+			for (int i = startY; i <= endY; i++){ // this does a 'ghost' pass to check if the ship can be placed; if yes, checker becomes true
+				if (board[startX][i].equals("+")){
+					checker = true;
+				}
+			}
+		}
+
+		if (startY == endY){ // for loop only starts if end is bigger than y, but player may not enter coordinates like in that manner
+
+			// if end is smaller than start, switch value of variables
+			if (endX < startX){
+				temp = endX;
+				endX = startX;
+				startX = temp;
+			}
+
+			for (int i = startX; i <= endX; i++){ // this does a 'ghost' pass to check if the ship can be placed; if yes, checker becomes true
+				if (board[i][startY].equals("+")){
+					checker = true;
+				}
+			}
+		}
+		return checker;
 
 
-} 
+
+	}
+
+
+
+}
+ 
