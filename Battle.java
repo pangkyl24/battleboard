@@ -84,12 +84,15 @@ public static void main ( String[] args) {
 	
 	//check if ship is fine
 	boolean boardChecker;
+	boolean tooBig;
+	boolean isDiagonal;
 	
 	// array for coordinates
 	int[] coord = new int[4];
 	
 	//get ship coordinates for each ship
 	for (int i = 0; i < 3; i++) {
+		System.out.println("");
 		System.out.println("Place your ship with length " + (i + 2) + ". You will need to place the specify the start end end coordinates of the Ship" );
 		System.out.print("Enter a row coordinate as an integer for the start: ");
 		xStartStringPlayer = (scan.nextLine()).toUpperCase();
@@ -106,12 +109,28 @@ public static void main ( String[] args) {
 		
 		yEndPlayer = (colNamesString).indexOf(yEndStringPlayer); 
 		xEndPlayer = (rowNamesString).indexOf(xEndStringPlayer); 
+		
 		boardChecker = ships[i].onBoard(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer);
+		tooBig = ships[i].toBig(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer, i+2);
+		isDiagonal = ships[i].isDiagonal(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer);
+		
 		if (!boardChecker){
-			System.out.println("Ship is outside the board. Place your ship again");
+			System.out.println("Ship is outside the board. Place your ship again.");
+			i--;
+			continue;
+		}
+		if (isDiagonal){
+			System.out.println("Ship is diagonal. Place your ship again.");
+			i--;
+			continue;
+		}
+		//System.out.println(xEndPlayer+1);
+		if (tooBig){
+			System.out.println("Ship is too big. You need to place a ship of size " + (i +2)+ ".");
 			i--;
 		}
-		if(boardChecker){
+		
+		if(boardChecker && !tooBig && !isDiagonal){
 			coord[0] = xStartPlayer + 1;
 			coord[1] = yStartPlayer;
 			coord[2] = xEndPlayer+1;
@@ -125,6 +144,7 @@ public static void main ( String[] args) {
 		}
 		
 		
+		
 	}
 
 
@@ -132,11 +152,17 @@ public static void main ( String[] args) {
 
 
 
-	// temporary ship while we combine the ship class into the main game for testing purposes
+	// generate player ships
 	boolean gameOver = false;
-	int arr[] = {1,1,1,5};
-
-
+	Ship AIS2 = new Ship();
+	Ship AIS3 = new Ship(3);
+	Ship AIS4 = new Ship(4);
+	Ship computeraiShips[] = {AIS2, AIS3, AIS4};
+	for (int i = 0; i < 3; i++) {
+		computeraiShips[i].aiCoords();
+		computeraiShips[i].shipCoords(computeraiShips[i].coordinates[0], computeraiShips[i].coordinates[1], computeraiShips[i].coordinates[2], computeraiShips[i].coordinates[3]);
+		
+	}
 
 
 	String attackLetter; //Player will enter string for attack column
@@ -149,7 +175,7 @@ public static void main ( String[] args) {
 
 	int computerAttackX; // computer X attack coordinate
 	int computerAttackY; // computer Y attack coordinate
-
+	int playerAttackSucessNumber = 0;
 
 
 	//Begin game
@@ -168,6 +194,9 @@ public static void main ( String[] args) {
 		System.out.print("Firing missles at enemy: ");
 		playerSucess = computerShips.registerAttack(attackNumberRow+1, attackNumberCol); // register the players attack on computer; return true if hit
 		playerHits.markAttack(attackNumberRow+1, attackNumberCol, playerSucess); // if player hit, update player attack board as needed
+		if (playerSucess){
+			playerAttackSucessNumber += 1;
+		}
 		// Show board
 		playerHits.showBoard();
 		System.out.println("   +--+--+--+--+--+--+--+--+--+ ");
@@ -192,6 +221,10 @@ public static void main ( String[] args) {
 		System.out.println("Enemy fired at " + rowNamesString.substring(computerAttackX-1, computerAttackX) + colNamesString.substring(computerAttackY, computerAttackY+1));
 		System.out.println();
 		System.out.println();
+		
+		if (playerAttackSucessNumber == 9){
+			gameOver = true;
+		}
 
 
 
