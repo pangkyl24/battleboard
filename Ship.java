@@ -1,27 +1,28 @@
-import java.util.*;
 public class Ship{
 
 	//[Class Variables]
 	public int shipSize;
 	public int[] coordinates;
 	public int hits;
-	
+	public boolean diagonal;
+	public boolean inBounds;
+
 	public Ship(){ //CONSTRUCTOR
 		shipSize = 2;
 		coordinates = new int[4];
 		hits = 0;
+		
 	}
-	
+
 	public Ship(int size){ //OVERLOADED CONTRUCTOR
 		shipSize = size;
 		coordinates = new int[4];
 		hits = 0;
 	}
-	
+
 	/*public int[] shipPos() { // Returns the shipPosition ------------> Cut out
 		return shipStartEnd;
 	}
-	
 	public boolean acceptPosition(int startX,  int startY, int endX, int endY) {
 		if (startX == endX || startY == endY){ //Vertical/Horizontal -> True
 			if (startX >= 10 || startY >= 10 || endX >= 10 ||endY >= 10){ //In bounds
@@ -31,10 +32,10 @@ public class Ship{
 		}
 		return false;
 	}*/
-	
+
 	//[Confirms]
 	public void shipCoords (int startX, int startY, int endX, int endY) {
-		
+		// Get necessary coordinates and add them to coordinates array
 		coordinates[0] = startX;
 		coordinates[1] = startY;
 		coordinates[2] = endX;
@@ -50,7 +51,7 @@ public class Ship{
 				for (int i = 0; i < shipSize; i++){ // Determining Ship Coordinates
 					coords[i][0] = startX;
 					System.out.println(coords[i][0]);
-					coords[i][1] = startY + i;	
+					coords[i][1] = startY + i;
 					System.out.println(coords[i][1]);
 				}
 			}
@@ -59,42 +60,46 @@ public class Ship{
 				for (int i = 0; i < shipSize; i++){
 					coords[i][0] = startX + i;
 					System.out.println(coords[i][0]);
-					coords[i][1] = startY;	
+					coords[i][1] = startY;
 					System.out.println(coords[i][1]);
-				}	
+				}
 			}
 		}
 		Coordinates = coords;
 		return coords;*/
-		
-		
+
+
 	}
-	
-	public int[] returnCoords(){
+
+	public int[] returnCoords(){ // just return coordinates for board; need to update to not pass the reference
 		System.out.println(coordinates);
 		return coordinates;
-		
+
 	}
-	
-	
-	public void aiCoords(int x, int y, int horiVerti){
+
+
+	public void aiCoords(){ // will control the coordinates for the computer; split graph into 4 sections
+
+		int x = (int)(Math.random()*10+1);
+		int y = (int)(Math.random()*10+1);
+		int horiVerti = (int)(Math.random()*2);
 		
 		coordinates[0] = x;
 		coordinates[1] = y;
-		
+
 		if (horiVerti == 0){ //Horizontal
-			
+
 			coordinates[3] = y;
-			if (x <= 5){		
+			if (x <= 5){
 				coordinates[2] = x+shipSize-1;
 			}
 			else {
 				coordinates[2] = x-shipSize+1;
 			}
-			
+
 		}
 		else if (horiVerti == 1){ //Vertical
-			
+
 			coordinates[2] = x;
 			if (y <= 5){
 				coordinates[3] = y+shipSize-1;
@@ -102,42 +107,67 @@ public class Ship{
 			else {
 				coordinates[3] = y-shipSize+1;
 			}
-			
+
 		}
 		//System.out.println("(" + Coordinates[0] + ", " + Coordinates[1] + ", " + Coordinates[2] + ", " + Coordinates[3] + ")");
-		
+
 	}
-	
-	public void getsHit(int x, int y){		
+
+	public void getsHit(int x, int y){
 		hits += 1; //Marking that Ship was Hit
 		for (int i = 0; i < shipSize; i++){
-			
+
 			/*if (Coordinates[i][0] == x && Coordinates[i][1] == y){ //Removing the Coord
 				Coordinates[i][0] = -1;
 				Coordinates[i][1] = -1;
 			}*/
-		}		
+		}
 	}
 	
-	public boolean onBoard (int startX, int startY, int endX, int endY){
+	public boolean returnHit(int x, int y){
 		
-		if (startX > 11 || startX < 1){
-			return false;
+		if (coordinates[0] == coordinates[2]){ //X's are the same		
+			if (x == coordinates[0]){ //If x val = xVal of Coordinates
+				if (coordinates[1] < coordinates[3]){
+					for (int i = coordinates[1]; i < (coordinates[3] + 1); i++){ //iterating over possible y vals
+						if (y == i){
+							return true;
+						}
+					}
+				}
+				else if (coordinates[1] > coordinates[3]){
+					for (int i = coordinates[3]; i < coordinates[1] + 1; i++){
+						if (y == i){
+							return true;
+						}
+					}
+				}
+			}	
 		}
-		if (startY > 10 || startY < 1){
-			return false;
+		else if (coordinates[1] == coordinates[3]){ //Y's are the same		
+			if (y == coordinates[1]){ //If y val = yVal of Coordinates
+				if (coordinates[0] < coordinates[2]){
+					for (int i = coordinates[0]; i < (coordinates[2] + 1); i++){
+						if (x == i){
+							return true;
+						}
+					}
+				}
+				else if (coordinates[0 > coordinates[2]){
+					for (int i = coordinates[2]; i < (coordinates[0] + 1); i++){
+						if (x == i){
+							return true;
+						}
+					}
+				}
+			}
 		}
-		if (endX > 11 || endX < 1){
-			return false;
-		}
-		if (endY > 10 || endY < 1){
-			return false;
-		}
-		return true;
-		
+		return false;
+			
 	}
 	
-		public boolean toBig (int startX, int startY, int endX, int endY, int size){
+	
+	public boolean toBig (int startX, int startY, int endX, int endY, int size){
 			int temp;
 		System.out.println((Math.abs(endX - startX) + 1));
 		if (startX == endX){
@@ -176,13 +206,40 @@ public class Ship{
 	
 	public boolean isDiagonal(){
 		
-		if ((coordinates[1]==coordinates[3])||)
-		
+		if ((coordinates[1] == coordinates[3]) || coordinates[0] == coordinates[2]){
+			diagonal = true;
+			return true;
+		}
+		diagonal = false;
+		return false;
 	}
-	
-	
-	
-	
-	
-	
+
+	public boolean onBoard (int startX, int startY, int endX, int endY){ // make sure coordinates are on board to ensure game will work
+		if (startX > 10 || startX < 1){ // board is 10 x 10 so need to check with 10 and 1
+			inBounds = false;
+			return false;
+		}
+		if (startY > 10 || startY < 1){ // board is 10 x 10 so need to check with 10 and 1
+			inBounds = false;
+			return false;
+		}
+		if (endX > 10 || endX < 1){ // board is 10 x 10 so need to check with 10 and 1
+			inBounds = false;
+			return false;
+		}
+		if (endY > 10 || endY < 1){ // board is 10 x 10 so need to check with 10 and 1
+			inBounds = false;
+			return false;
+		}
+		inBounds = true;
+		return true;
+
+	}
+
+
+
+
+
+
+
 }
