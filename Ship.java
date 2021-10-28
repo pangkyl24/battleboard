@@ -11,7 +11,7 @@ public class Ship{
 		shipSize = 2;
 		coordinates = new int[4];
 		hits = 0;
-		
+
 	}
 
 	public Ship(int size){ //OVERLOADED CONTRUCTOR
@@ -83,7 +83,7 @@ public class Ship{
 		int x = (int)(Math.random()*10+1);
 		int y = (int)(Math.random()*10+1);
 		int horiVerti = (int)(Math.random()*2);
-		
+
 		coordinates[0] = x;
 		coordinates[1] = y;
 
@@ -123,10 +123,10 @@ public class Ship{
 			}*/
 		}
 	}
-	
+
 	public boolean returnHit(int x, int y){
-		
-		if (coordinates[0] == coordinates[2]){ //X's are the same		
+
+		if (coordinates[0] == coordinates[2]){ //X's are the same
 			if (x == coordinates[0]){ //If x val = xVal of Coordinates
 				if (coordinates[1] < coordinates[3]){
 					for (int i = coordinates[1]; i < (coordinates[3] + 1); i++){ //iterating over possible y vals
@@ -142,9 +142,9 @@ public class Ship{
 						}
 					}
 				}
-			}	
+			}
 		}
-		else if (coordinates[1] == coordinates[3]){ //Y's are the same		
+		else if (coordinates[1] == coordinates[3]){ //Y's are the same
 			if (y == coordinates[1]){ //If y val = yVal of Coordinates
 				if (coordinates[0] < coordinates[2]){
 					for (int i = coordinates[0]; i < (coordinates[2] + 1); i++){
@@ -163,10 +163,10 @@ public class Ship{
 			}
 		}
 		return false;
-			
+
 	}
-	
-	
+
+
 	public boolean toBig (int startX, int startY, int endX, int endY, int size){
 			int temp;
 		System.out.println((Math.abs(endX - startX) + 1));
@@ -178,13 +178,13 @@ public class Ship{
 				endY = startY;
 				startY = temp;
 			}
-			
+
 			if ((Math.abs(endY - startY)+1) != size){
 				//System.out.println((Math.abs(endY - startY)+1));
 				return true;
 			}
 		}
-		
+
 		if (startY == endY){
 			if (endX < startX){ // for loop only starts if end is bigger than y, but player may not enter coordinates like in that manner
 
@@ -193,7 +193,7 @@ public class Ship{
 				endY = startY;
 				startY = temp;
 			}
-			
+
 			if ((Math.abs(endX - startX) + 1) != size){
 				//System.out.println((Math.abs(endX - startX) + 1));
 				return true;
@@ -201,11 +201,11 @@ public class Ship{
 		}
 
 		return false;
-		
+
 	}
-	
+
 	public boolean isDiagonal(int startX, int startY, int endX, int endY){
-		
+
 		if ((startX == endX) || startY == endY){
 			diagonal = false;
 			return false;
