@@ -204,14 +204,14 @@ public class Ship{
 		
 	}
 	
-	public boolean isDiagonal(){
+	public boolean isDiagonal(int startX, int startY, int endX, int endY){
 		
-		if ((coordinates[1] == coordinates[3]) || coordinates[0] == coordinates[2]){
-			diagonal = true;
-			return true;
+		if ((startX == endX) || startY == endY){
+			diagonal = false;
+			return false;
 		}
-		diagonal = false;
-		return false;
+		diagonal = true;
+		return true;
 	}
 
 	public boolean onBoard (int startX, int startY, int endX, int endY){ // make sure coordinates are on board to ensure game will work
