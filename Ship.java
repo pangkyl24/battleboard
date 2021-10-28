@@ -153,7 +153,7 @@ public class Ship{
 						}
 					}
 				}
-				else if (coordinates[0 > coordinates[2]){
+				else if (coordinates[0] > coordinates[2]){
 					for (int i = coordinates[2]; i < (coordinates[0] + 1); i++){
 						if (x == i){
 							return true;
