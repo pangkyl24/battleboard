@@ -11,7 +11,7 @@ public static void main ( String[] args) {
 	Board playerShips = new Board(); // load in player board with ships
 	Board playerHits = new Board(); // load player attack board
 	Board computerShips = new Board(); // load computer board with ships
-	
+
 	Scanner scan = new Scanner(System.in);  // scaner
 
 	String colNamesString = " ABCDEFGHIJ  "; // Name of columns on board to use when player enters in attack coordinates
@@ -63,64 +63,61 @@ public static void main ( String[] args) {
 
 	//Place all ships
 	// Need to do this part still. Ship class is almost complete and will add into main once done
-	
+
 	//Make ships
 	System.out.println("You will have 3 ships that you can place, of sizes 2, 3, and 4. Generating ships ... ");
 	Ship S2 = new Ship();
 	Ship S3 = new Ship(3);
 	Ship S4 = new Ship(4);
 	Ship ships[] = {S2, S3, S4};
-	
+
 	//need to convert from int to string
 	String xStartStringPlayer;
 	String yStartStringPlayer;
 	String xEndStringPlayer;
 	String yEndStringPlayer;
-	
+
 	int xStartPlayer;
 	int yStartPlayer;
 	int xEndPlayer;
 	int yEndPlayer;
-	
+
 	//check if ship is fine
 	boolean boardChecker;
 	boolean tooBig;
 	boolean isDiagonal;
-	
+	boolean doesOverlap;
 	// array for coordinates
 	int[] coord = new int[4];
-	
+
 	//get ship coordinates for each ship
 	for (int i = 0; i < 3; i++) {
 		System.out.println("");
 		System.out.println("Place your ship with length " + (i + 2) + ". You will need to place the specify the start end end coordinates of the Ship" );
-		System.out.print("Enter a row coordinate as an integer for the start: ");
-		xStartStringPlayer = (scan.nextLine()).toUpperCase();
 		System.out.print("Enter an uppercase letter for the column of the start of the ship: ");
 		yStartStringPlayer = (scan.nextLine()).toUpperCase();
-		
-		yStartPlayer = (colNamesString).indexOf(yStartStringPlayer); 
-		xStartPlayer = (rowNamesString).indexOf(xStartStringPlayer); 
-		
-		System.out.print("Enter a row coordinate as an integer for the end: ");
-		xEndStringPlayer = (scan.nextLine()).toUpperCase();
+		System.out.print("Enter a row coordinate as an integer for the start: ");
+		xStartStringPlayer = (scan.nextLine()).toUpperCase();
+
+		yStartPlayer = (colNamesString).indexOf(yStartStringPlayer);
+		xStartPlayer = (rowNamesString).indexOf(xStartStringPlayer);
+
 		System.out.print("Enter an uppercase letter for the column of the end of the ship: ");
 		yEndStringPlayer = (scan.nextLine()).toUpperCase();
-		
-		yEndPlayer = (colNamesString).indexOf(yEndStringPlayer); 
-		xEndPlayer = (rowNamesString).indexOf(xEndStringPlayer); 
-		
+		System.out.print("Enter a row coordinate as an integer for the end: ");
+		xEndStringPlayer = (scan.nextLine()).toUpperCase();
+
+		yEndPlayer = (colNamesString).indexOf(yEndStringPlayer);
+		xEndPlayer = (rowNamesString).indexOf(xEndStringPlayer);
+
+		// checking
 		boardChecker = ships[i].onBoard(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer);
 		tooBig = ships[i].toBig(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer, i+2);
 		isDiagonal = ships[i].isDiagonal(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer);
-		
+		doesOverlap = playerShips.doesOverlap(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer);
+
 		if (!boardChecker){
 			System.out.println("Ship is outside the board. Place your ship again.");
-			i--;
-			continue;
-		}
-		if (isDiagonal){
-			System.out.println("Ship is diagonal. Place your ship again.");
 			i--;
 			continue;
 		}
@@ -129,8 +126,18 @@ public static void main ( String[] args) {
 			System.out.println("Ship is too big. You need to place a ship of size " + (i +2)+ ".");
 			i--;
 		}
-		
-		if(boardChecker && !tooBig && !isDiagonal){
+		if (isDiagonal){
+			System.out.println("Ship is diagonal. Place your ship again.");
+			i--;
+			continue;
+		}
+		if (doesOverlap){
+			System.out.println("Ship overlaps another ship. Place your ship again.");
+			i--;
+			continue;
+		}
+
+		if(boardChecker && !tooBig && !isDiagonal && !doesOverlap){
 			coord[0] = xStartPlayer + 1;
 			coord[1] = yStartPlayer;
 			coord[2] = xEndPlayer+1;
@@ -142,13 +149,13 @@ public static void main ( String[] args) {
 			System.out.println("+--+--+--+--+--+--+--+--+--+ ");
 			playerShips.showBoard();
 		}
-		
-		
-		
+
+
+
 	}
 
 
-	
+
 
 
 
@@ -158,16 +165,23 @@ public static void main ( String[] args) {
 	Ship AIS3 = new Ship(3);
 	Ship AIS4 = new Ship(4);
 	Ship computeraiShips[] = {AIS2, AIS3, AIS4};
+
+	boolean aiOverlap;
 	for (int i = 0; i < 3; i++) {
 		computeraiShips[i].aiCoords();
+		aiOverlap = computerShips.doesOverlap(computeraiShips[i].coordinates[0], computeraiShips[i].coordinates[1], computeraiShips[i].coordinates[2], computeraiShips[i].coordinates[3]);
+		if (aiOverlap){
+			computeraiShips[i].aiCoords();
+			i--;
+		}
 		computeraiShips[i].shipCoords(computeraiShips[i].coordinates[0], computeraiShips[i].coordinates[1], computeraiShips[i].coordinates[2], computeraiShips[i].coordinates[3]);
-		
+
 	}
 
 
-	String attackLetter; //Player will enter string for attack column
+	char attackLetter; //Player will enter string for attack column
 	int attackNumberCol; //Convert string for attack to integer for indexing
-	String attackNumberAsString; //Player will enter string for attack row
+	char attackNumberAsString; //Player will enter string for attack row
 	int attackNumberRow; //Convert string for attack to integer for indexing
 	boolean playerSucess; // checks if player was sucessful in hitting ship
 	boolean computerSucess; // checks if computer was sucessful in hitting ship
@@ -183,10 +197,11 @@ public static void main ( String[] args) {
 		//Get attack coordinates from player
 		System.out.println("Guess where to attack. You will need to enter a letter and an integer coordinate as integers. ");
 		System.out.print("Enter an uppercase letter: ");
-		attackLetter = (scan.nextLine()).toUpperCase(); // convert input to uppercase
+		attackLetter = (((scan.nextLine())).toUpperCase()).charAt(0); // convert input to uppercase
+
 		attackNumberCol = (colNamesString).indexOf(attackLetter); // Get index of letter so to enter into attack method of Board.java
 		System.out.print("Enter a row coordinate as an integer: ");
-		attackNumberAsString = scan.nextLine(); // convert input to uppercase
+		attackNumberAsString = (((scan.nextLine())).toUpperCase()).charAt(0); // convert input to uppercase
 		attackNumberRow = (rowNamesString).indexOf(attackNumberAsString); // Get index of number (which is a string right now) so to enter into attack method of Board.java
 
 		//Attack computer ships
@@ -221,7 +236,7 @@ public static void main ( String[] args) {
 		System.out.println("Enemy fired at " + rowNamesString.substring(computerAttackX-1, computerAttackX) + colNamesString.substring(computerAttackY, computerAttackY+1));
 		System.out.println();
 		System.out.println();
-		
+
 		if (playerAttackSucessNumber == 9){
 			gameOver = true;
 		}
