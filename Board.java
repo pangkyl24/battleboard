@@ -1,16 +1,25 @@
+/*
+Name: Manan Vij
+File: Board.java
+Purpose: Holds all possible aspects needed for a board for both player and AI. Battle.java uses 3 boards
+
+
+*/
+
+
 public class Board{
 	//Variables
 	final int ROW;
 	final int COL;
 	String board[][];
-	String colNames[] = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
-	String rowNames [] = {"0","1","2","3","4","5","6","7","8","9"};
-	
+	String colNames[] = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}; // what to write for columns
+	String rowNames [] = {"0","1","2","3","4","5","6","7","8","9"}; // what to write for rows
+
 	public Board(){ //Constructor
 		ROW = 11; // one higher than lenght because of indexes on side of board
 		COL = 11; // one higher than lenght because of indexes on side of board
 		board = new String[ROW][COL]; // create a board
-		for (int i = 0 ; i < ROW; i++){
+		for (int i = 0 ; i < ROW; i++){ // when creating a board, need to initialize it with dashes
 				for (int j = 0; j < COL; j++) {
 					board[i][j] = "-";
 				}
@@ -69,7 +78,7 @@ public class Board{
 			}
 			if (!checkerX){ // if ship can be placed, update values on board
 				for (int i = startY; i <= endY; i++){
-					board[startX][i] = "+";
+					board[startX][i] = "+"; // change value to show ship
 				}
 			}
 		}
@@ -90,7 +99,7 @@ public class Board{
 			}
 			if (!checkerY) { // if ship can be placed, update values on board
 				for (int i = startX; i <= endX; i++){
-					board[i][startY] = "+";
+					board[i][startY] = "+"; // change value to show ship
 					}
 				}
 			}
@@ -167,4 +176,3 @@ public class Board{
 
 
 }
- 
