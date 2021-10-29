@@ -22,14 +22,14 @@ public static void main ( String[] args) {
 	// Introduction to game
 	System.out.println("");
 	System.out.println("                                 # #  ( )");
-  System.out.println("                              ___#_#___|__");
-  System.out.println("                             _  |____________|  _");
-  System.out.println("                      _=====| | |            | | |==== _");
-  System.out.println("                =====| |.---------------------------. | |====");
-  System.out.println("  <--------------------'   .  .  .  .  .  .  .  .   '--------------|");
-  System.out.println("     |                                                            |");
-  System.out.println("     |_______________________________________________WWS_________|");
-
+  	System.out.println("                              ___#_#___|__");
+  	System.out.println("                             _  |____________|  _");
+  	System.out.println("                      _=====| | |            | | |==== _");
+  	System.out.println("                =====| |.---------------------------. | |====");
+  	System.out.println("  <--------------------'   .  .  .  .  .  .  .  .   '--------------|");
+  	System.out.println("     |                                                            |");
+  	System.out.println("     |_______________________________________________WWS_________|");
+	//ASCII Art
 	System.out.println("");
 	System.out.println("");
 	System.out.println("");
@@ -71,7 +71,7 @@ public static void main ( String[] args) {
 	Ship S4 = new Ship(4);
 	Ship ships[] = {S2, S3, S4};
 
-	//need to convert from int to string
+	//need to convert from int to string -> Player Ship Placement Variables
 	String xStartStringPlayer;
 	String yStartStringPlayer;
 	String xEndStringPlayer;
@@ -87,7 +87,7 @@ public static void main ( String[] args) {
 	boolean tooBig;
 	boolean isDiagonal;
 	boolean doesOverlap;
-	// array for coordinates
+	// array for coordinates (of ship)
 	int[] coord = new int[4];
 
 	//get ship coordinates for each ship
@@ -111,12 +111,12 @@ public static void main ( String[] args) {
 		xEndPlayer = (rowNamesString).indexOf(xEndStringPlayer);
 
 		// checking
-		boardChecker = ships[i].onBoard(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer);
-		tooBig = ships[i].toBig(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer, i+2);
-		isDiagonal = ships[i].isDiagonal(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer);
-		doesOverlap = playerShips.doesOverlap(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer);
+		boardChecker = ships[i].onBoard(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer); //Check if ship is on board
+		tooBig = ships[i].toBig(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer, i+2); //Check if ship is tooBig
+		isDiagonal = ships[i].isDiagonal(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer); //Check if ship is diagonal
+		doesOverlap = playerShips.doesOverlap(xStartPlayer+1, yStartPlayer, xEndPlayer+1, yEndPlayer); //Checks if ships overlap
 
-		if (!boardChecker){
+		if (!boardChecker){ //Using the vars boardChecker, tooBig, isDiagonal, doesOverlap, next few if statements determine if we need to replace any ships
 			System.out.println("Ship is outside the board. Place your ship again.");
 			i--;
 			continue;
@@ -137,7 +137,7 @@ public static void main ( String[] args) {
 			continue;
 		}
 
-		if(boardChecker && !tooBig && !isDiagonal && !doesOverlap){
+		if(boardChecker && !tooBig && !isDiagonal && !doesOverlap){ //If all valid, add to board
 			coord[0] = xStartPlayer + 1;
 			coord[1] = yStartPlayer;
 			coord[2] = xEndPlayer+1;
@@ -159,14 +159,14 @@ public static void main ( String[] args) {
 
 
 
-	// generate player ships
+	// generate AI ships
 	boolean gameOver = false;
 	Ship AIS2 = new Ship();
 	Ship AIS3 = new Ship(3);
 	Ship AIS4 = new Ship(4);
-	Ship computeraiShips[] = {AIS2, AIS3, AIS4};
+	Ship computeraiShips[] = {AIS2, AIS3, AIS4}; //Putting Ships into Array for easy access/manipulation
 
-	boolean aiOverlap;
+	boolean aiOverlap; //Making sure AI ships dont overlap
 	for (int i = 0; i < 3; i++) {
 		computeraiShips[i].aiCoords();
 		aiOverlap = computerShips.doesOverlap(computeraiShips[i].coordinates[0], computeraiShips[i].coordinates[1], computeraiShips[i].coordinates[2], computeraiShips[i].coordinates[3]);
@@ -178,7 +178,7 @@ public static void main ( String[] args) {
 
 	}
 
-
+	//Game Variables
 	char attackLetter; //Player will enter string for attack column
 	int attackNumberCol; //Convert string for attack to integer for indexing
 	char attackNumberAsString; //Player will enter string for attack row
@@ -237,17 +237,11 @@ public static void main ( String[] args) {
 		System.out.println();
 		System.out.println();
 
-		if (playerAttackSucessNumber == 9){
+		if (playerAttackSucessNumber == 9){ //Game Over Mechanism
 			gameOver = true;
 		}
 
-
-
 	}
-
-	//Still need to add in stopping mechanism to game once ship.java is complete
-
-
 
 }  //close main method
 
