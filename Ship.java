@@ -1,3 +1,12 @@
+/*
+Name: Kyler Pang
+File: Ship.java
+Purpose: Holds all possible aspects needed in a ship for both player and AI
+
+
+*/
+
+
 public class Ship{
 
 	//[Class Variables]
@@ -71,26 +80,21 @@ public class Ship{
 
 	}
 
-	public int[] returnCoords(){ // just return coordinates for board; need to update to not pass the reference
-		System.out.println(coordinates);
-		return coordinates;
-
-	}
-
 
 	public void aiCoords(){ // will control the coordinates for the computer; split graph into 4 sections | Randomly places ship for AI
 
+		// Randomly generate a start coordinate
 		int x = (int)(Math.random()*10+1);
 		int y = (int)(Math.random()*10+1);
-		int horiVerti = (int)(Math.random()*2);
+		int horiVerti = (int)(Math.random()*2); // randomly figure out if going to be vertical or horizontal ship
 
-		coordinates[0] = x;
-		coordinates[1] = y;
+		coordinates[0] = x; // update values of AI coordinates for constructor access
+		coordinates[1] = y; // update values of AI coordinates for constructor access
 
-		if (horiVerti == 0){ //Horizontal
+		if (horiVerti == 0){ //Horizontal placment
 
 			coordinates[3] = y;
-			if (x <= 5){
+			if (x <= 5){ // 'splits' board in half vertically
 				coordinates[2] = x+shipSize-1;
 			}
 			else {
@@ -98,10 +102,10 @@ public class Ship{
 			}
 
 		}
-		else if (horiVerti == 1){ //Vertical
+		else if (horiVerti == 1){ //Vertical placement
 
 			coordinates[2] = x;
-			if (y <= 5){
+			if (y <= 5){ // 'splits" board in half horizontally
 				coordinates[3] = y+shipSize-1;
 			}
 			else {
@@ -113,16 +117,7 @@ public class Ship{
 
 	}
 
-	public void getsHit(int x, int y){
-		hits += 1; //Marking that Ship was Hit
-		for (int i = 0; i < shipSize; i++){
 
-			/*if (Coordinates[i][0] == x && Coordinates[i][1] == y){ //Removing the Coord
-				Coordinates[i][0] = -1;
-				Coordinates[i][1] = -1;
-			}*/
-		}
-	}
 
 	public boolean returnHit(int x, int y){ //returns if ship was hit
 
@@ -169,7 +164,7 @@ public class Ship{
 
 	public boolean toBig (int startX, int startY, int endX, int endY, int size){ //checker func -> if ship too big
 			int temp;
-		System.out.println((Math.abs(endX - startX) + 1));
+		//System.out.println((Math.abs(endX - startX) + 1));
 		if (startX == endX){
 			if (endY < startY){ // for loop only starts if end is bigger than y, but player may not enter coordinates like in that manner
 
