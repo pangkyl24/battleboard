@@ -1,10 +1,12 @@
 public class Board{
+	//Variables
 	final int ROW;
 	final int COL;
 	String board[][];
 	String colNames[] = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 	String rowNames [] = {"0","1","2","3","4","5","6","7","8","9"};
-	public Board(){
+	
+	public Board(){ //Constructor
 		ROW = 11; // one higher than lenght because of indexes on side of board
 		COL = 11; // one higher than lenght because of indexes on side of board
 		board = new String[ROW][COL]; // create a board
@@ -122,7 +124,7 @@ public class Board{
 
 	}
 
-	public boolean doesOverlap(int startX, int startY, int endX, int endY){
+	public boolean doesOverlap(int startX, int startY, int endX, int endY){ //Determines whether ships overlap
 		boolean checker = false;
 		int temp;
 		if (startX == endX){
