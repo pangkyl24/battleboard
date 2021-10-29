@@ -78,7 +78,7 @@ public class Ship{
 	}
 
 
-	public void aiCoords(){ // will control the coordinates for the computer; split graph into 4 sections
+	public void aiCoords(){ // will control the coordinates for the computer; split graph into 4 sections | Randomly places ship for AI
 
 		int x = (int)(Math.random()*10+1);
 		int y = (int)(Math.random()*10+1);
@@ -124,7 +124,7 @@ public class Ship{
 		}
 	}
 
-	public boolean returnHit(int x, int y){
+	public boolean returnHit(int x, int y){ //returns if ship was hit
 
 		if (coordinates[0] == coordinates[2]){ //X's are the same
 			if (x == coordinates[0]){ //If x val = xVal of Coordinates
@@ -167,7 +167,7 @@ public class Ship{
 	}
 
 
-	public boolean toBig (int startX, int startY, int endX, int endY, int size){
+	public boolean toBig (int startX, int startY, int endX, int endY, int size){ //checker func -> if ship too big
 			int temp;
 		System.out.println((Math.abs(endX - startX) + 1));
 		if (startX == endX){
@@ -204,7 +204,7 @@ public class Ship{
 
 	}
 
-	public boolean isDiagonal(int startX, int startY, int endX, int endY){
+	public boolean isDiagonal(int startX, int startY, int endX, int endY){ //checker func -> if ship diagonal
 
 		if ((startX == endX) || startY == endY){
 			diagonal = false;
