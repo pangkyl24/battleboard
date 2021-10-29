@@ -28,8 +28,10 @@ public static void main ( String[] args) {
   	System.out.println("                =====| |.---------------------------. | |====");
   	System.out.println("  <--------------------'   .  .  .  .  .  .  .  .   '--------------|");
   	System.out.println("     |                                                            |");
-  	System.out.println("     |_______________________________________________WWS_________|");
-	//ASCII Art
+  	System.out.println("     |______________________________________________MVKP_________|");
+	//ASCII Art: https://ascii.co.uk/art/battleship (this is the refernce from where this is modified
+	
+	// Add spacing
 	System.out.println("");
 	System.out.println("");
 	System.out.println("");
@@ -45,6 +47,7 @@ public static void main ( String[] args) {
 	scan.nextLine();
 	System.out.println("USER INTERFACE");
 	System.out.println("When you play, you can only see your own board. Your board consists of two parts that are separated by dashes (-) and pluses (+). This boundary seperates your ATTACKING board (top) from your STRATEGIC board (bottom). That ATTACKING board is where you will be able to see your hits and misses againt the computer. The STRATEGIC board is where you can see your ships and the computer's hits and misses, marked by H and M respectively. ");
+	// Show a picture of an empty board to intialize the reader
 	System.out.println("Here is a picture of an empty board: \n");
 	playerHits.showBoard();
 	System.out.println("   +--+--+--+--+--+--+--+--+--+ ");
